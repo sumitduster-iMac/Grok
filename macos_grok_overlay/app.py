@@ -341,6 +341,10 @@ class AppDelegate(NSObject):
 
     # Hide the overlay and allow focus to return to the next visible application.
     def hideWindow_(self, sender):
+        # Close About window if it's open
+        if hasattr(self, 'aboutWindow') and self.aboutWindow:
+            self.aboutWindow.close()
+            self.aboutWindow = None
         NSApp.hide_(None)
     
     # Minimize the window to the dock with animation.

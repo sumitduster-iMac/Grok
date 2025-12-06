@@ -133,14 +133,14 @@ class AppDelegate(NSObject):
         request_microphone_permission()
         # Run as regular app (shows in Dock)
         NSApp.setActivationPolicy_(NSApplicationActivationPolicyRegular)
-        # Create a borderless, resizable, miniaturizable window
+        # Create a borderless, floating, resizable, miniaturizable window
         self.window = AppWindow.alloc().initWithContentRect_styleMask_backing_defer_(
             NSMakeRect(500, 200, 550, 580),
             NSWindowStyleMaskBorderless | NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable,
             NSBackingStoreBuffered,
             False
         )
-        self.window.setLevel_(NSNormalWindowLevel)
+        self.window.setLevel_(NSFloatingWindowLevel)
         self.window.setCollectionBehavior_(
             NSWindowCollectionBehaviorCanJoinAllSpaces
             | NSWindowCollectionBehaviorStationary

@@ -35,9 +35,13 @@ class WebViewUIDelegate(NSObject):
     def webView_requestMediaCapturePermissionForOrigin_initiatedByFrame_type_decisionHandler_(
         self, webView, origin, frame, mediaType, decisionHandler
     ):
-        # WKPermissionDecision: 1 = Grant
-        # Call the decision handler to grant permission
-        decisionHandler(1)
+        # Grant WebKit-level permission (still requires macOS mic permission via TCC).
+        # Prefer the named constant when available; fall back to the historical value.
+        try:
+            decision = WKPermissionDecisionGrant
+        except NameError:
+            decision = 1
+        decisionHandler(decision)
 
 # Local libraries
 from .constants import (

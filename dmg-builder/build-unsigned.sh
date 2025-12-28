@@ -50,7 +50,12 @@ deactivate
 # Ad-hoc sign the bundle so that permission settings work as expected
 echo ""
 echo "Code signing the .app bundle with ad-hoc signature..."
-codesign --force --deep --sign - dist/$APP_NAME.app
+if codesign --force --deep --sign - dist/$APP_NAME.app; then
+    echo "Code signing successful."
+else
+    echo "WARNING: Code signing failed. The app may not work correctly."
+    echo "Continuing anyway..."
+fi
 
 # Check if create-dmg is installed
 if ! command -v create-dmg &> /dev/null; then

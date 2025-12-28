@@ -9,7 +9,22 @@ APP_NAME="Grok"
 SCRIPT_DIR=${0:a:h}
 cd "$SCRIPT_DIR"
 
-echo "Building Grok (unsigned, for local testing)..."
+# Determine which architecture(s) to target when building the app bundle.
+PY2APP_ARCH=${PY2APP_ARCH:-universal2}
+case "$PY2APP_ARCH" in
+    universal2)
+        export ARCHFLAGS="-arch arm64 -arch x86_64"
+        ;;
+    arm64|x86_64)
+        export ARCHFLAGS="-arch $PY2APP_ARCH"
+        ;;
+    *)
+        echo "Unsupported PY2APP_ARCH value: $PY2APP_ARCH"
+        echo "Use one of: arm64, x86_64, universal2."
+        exit 1
+        ;;
+esac
+echo "Building Grok for architecture: $PY2APP_ARCH (unsigned, for local testing)..."
 
 # Create a build environment
 touch temp.egg-info
@@ -26,7 +41,7 @@ build_dir_name=${0:a:h:t}
 pushd ..
 touch temp.egg-info
 rm -rf dist build *.egg-info
-python setup.py py2app --dist-dir="$build_dir_name"/dist --bdist-base="$build_dir_name"/build
+python setup.py py2app --arch "$PY2APP_ARCH" --dist-dir="$build_dir_name"/dist --bdist-base="$build_dir_name"/build
 popd
 
 # Deactivate the python building environment

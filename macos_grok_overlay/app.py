@@ -129,8 +129,6 @@ class DragArea(NSView):
 class AppDelegate(NSObject):
     # The main application setup.
     def applicationDidFinishLaunching_(self, notification):
-        # Request microphone permission at startup
-        request_microphone_permission()
         # Run as regular app (shows in Dock)
         NSApp.setActivationPolicy_(NSApplicationActivationPolicyRegular)
         # Create a borderless, resizable, miniaturizable window
@@ -195,13 +193,9 @@ class AppDelegate(NSObject):
         zoom_button.setTarget_(self)
         zoom_button.setAction_("zoomWindow:")
         self.drag_area.addSubview_(zoom_button)
-        # Update the webview sizinug and insert it below drag area.
+        # Update the webview sizing and insert it below drag area.
         content_view.addSubview_(self.webview)
         self.webview.setFrame_(NSMakeRect(0, 0, content_bounds.size.width, content_bounds.size.height - DRAG_AREA_HEIGHT))
-        # Contat the target website.
-        url = NSURL.URLWithString_(WEBSITE)
-        request = NSURLRequest.requestWithURL_(url)
-        self.webview.loadRequest_(request)
         # Set up script message handler for background color changes
         configuration = self.webview.configuration()
         user_content_controller = configuration.userContentController()
@@ -329,6 +323,20 @@ class AppDelegate(NSObject):
         self.window.setDelegate_(self)
         # Make sure this window is shown and focused.
         self.showWindow_(None)
+        # Defer website loading until after window is visible (improves startup time)
+        self.performSelector_withObject_afterDelay_("loadWebsite:", None, 0.1)
+        # Request microphone permission after a short delay (non-blocking)
+        self.performSelector_withObject_afterDelay_("requestMicrophonePermissionDeferred:", None, 1.0)
+
+    # Deferred website loading to improve startup performance
+    def loadWebsite_(self, sender):
+        url = NSURL.URLWithString_(WEBSITE)
+        request = NSURLRequest.requestWithURL_(url)
+        self.webview.loadRequest_(request)
+
+    # Deferred microphone permission request (non-blocking)
+    def requestMicrophonePermissionDeferred_(self, sender):
+        request_microphone_permission()
 
     # Logic to show the overlay, make it the key window, and focus on the typing area.
     def showWindow_(self, sender):

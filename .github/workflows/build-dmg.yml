@@ -1,0 +1,53 @@
+name: Build DMG
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build-dmg:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Homebrew dependencies
+        run: |
+          brew install create-dmg
+      
+      - name: Build DMG
+        run: |
+          cd dmg-builder
+          chmod +x build-unsigned.sh
+          ./build-unsigned.sh
+        env:
+          PY2APP_ARCH: universal2
+      
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Grok-DMG
+          path: dmg-builder/Grok.dmg
+          if-no-files-found: error
+      
+      - name: Upload App Bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Grok-App
+          path: dmg-builder/dist/Grok.app
+          if-no-files-found: error

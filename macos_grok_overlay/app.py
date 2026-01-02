@@ -149,7 +149,7 @@ class AppDelegate(NSObject):
         config = WKWebViewConfiguration.alloc().init()
         config.preferences().setJavaScriptCanOpenWindowsAutomatically_(True)
         # Enable media capture (microphone and camera) without user action
-        # WKAudiovisualMediaTypes: 0 = None, 1 = Audio, 2 = Video, 3 = All
+        # Setting to 0 means no media types require user action (allows all media types)
         config.setMediaTypesRequiringUserActionForPlayback_(0)  # Allow all media without user action
         # Initialize the WebView with a frame
         self.webview = WKWebView.alloc().initWithFrame_configuration_(

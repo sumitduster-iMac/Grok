@@ -56,28 +56,22 @@ def test_constants_configuration():
     print("\nTesting constants configuration...")
     
     # Read constants file directly to avoid macOS-specific imports
+    # (Quartz, AppKit modules are only available on macOS)
     constants_file = os.path.join(os.path.dirname(__file__), "macos_grok_overlay", "constants.py")
     
     try:
         with open(constants_file, 'r') as f:
             content = f.read()
         
-        # Extract LOGO paths using simple parsing
-        logo_black = None
-        logo_white = None
+        # Use a safer approach to extract constants
+        import re
         
-        for line in content.split('\n'):
-            if 'LOGO_BLACK_PATH' in line and '=' in line:
-                # Extract the value
-                parts = line.split('=', 1)
-                if len(parts) == 2:
-                    logo_black = parts[1].strip().strip('"').strip("'")
-            elif 'LOGO_WHITE_PATH' in line and '=' in line:
-                parts = line.split('=', 1)
-                if len(parts) == 2:
-                    logo_white = parts[1].strip().strip('"').strip("'")
+        # Match LOGO_BLACK_PATH = "..." or LOGO_BLACK_PATH = '...'
+        logo_black_match = re.search(r'LOGO_BLACK_PATH\s*=\s*["\']([^"\']+)["\']', content)
+        logo_white_match = re.search(r'LOGO_WHITE_PATH\s*=\s*["\']([^"\']+)["\']', content)
         
-        if logo_black:
+        if logo_black_match:
+            logo_black = logo_black_match.group(1)
             print(f"  ✓ LOGO_BLACK_PATH = {logo_black}")
             if logo_black == "logo/logo_black.png":
                 print(f"  ✓ LOGO_BLACK_PATH is correct")
@@ -87,7 +81,8 @@ def test_constants_configuration():
             print(f"  ✗ LOGO_BLACK_PATH not found")
             return False
             
-        if logo_white:
+        if logo_white_match:
+            logo_white = logo_white_match.group(1)
             print(f"  ✓ LOGO_WHITE_PATH = {logo_white}")
             if logo_white == "logo/logo_white.png":
                 print(f"  ✓ LOGO_WHITE_PATH is correct")

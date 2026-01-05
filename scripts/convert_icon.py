@@ -70,37 +70,40 @@ def convert_icon(input_path, project_root):
     for size in sizes:
         output_file = iconset_dir / f"icon_{size}x{size}.png"
         try:
-            subprocess.run([
+            result = subprocess.run([
                 "sips", "-z", str(size), str(size),
                 str(input_path), "--out", str(output_file)
-            ], check=True, capture_output=True)
+            ], check=True, capture_output=True, text=True)
             print(f"  ✓ {size}x{size}")
         except subprocess.CalledProcessError as e:
-            print(f"  ✗ Failed to create {size}x{size}: {e}")
+            print(f"  ✗ Failed to create {size}x{size}")
+            print(f"     Error: {e.stderr}")
             return False
     
     print("Converting to ICNS format...")
     try:
-        subprocess.run([
+        result = subprocess.run([
             "iconutil", "-c", "icns",
             str(iconset_dir), "-o", str(logo_dir / "icon.icns")
-        ], check=True, capture_output=True)
+        ], check=True, capture_output=True, text=True)
         print("  ✓ icon.icns created")
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ Failed to create ICNS: {e}")
+        print(f"  ✗ Failed to create ICNS")
+        print(f"     Error: {e.stderr}")
         return False
     
     print("Creating menu bar icons...")
     for icon_name in ["logo_black.png", "logo_white.png"]:
         output_file = logo_dir / icon_name
         try:
-            subprocess.run([
+            result = subprocess.run([
                 "sips", "-Z", "961",
                 str(input_path), "--out", str(output_file)
-            ], check=True, capture_output=True)
+            ], check=True, capture_output=True, text=True)
             print(f"  ✓ {icon_name}")
         except subprocess.CalledProcessError as e:
-            print(f"  ✗ Failed to create {icon_name}: {e}")
+            print(f"  ✗ Failed to create {icon_name}")
+            print(f"     Error: {e.stderr}")
             return False
     
     print("\n✅ Icon conversion complete!")

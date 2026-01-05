@@ -32,22 +32,30 @@ mkdir -p "$ICONSET_DIR"
 
 # Generate different sizes for iconset
 echo "Generating icon sizes..."
-sips -z 16 16 "$INPUT_ICON" --out "$ICONSET_DIR/icon_16x16.png" > /dev/null 2>&1
-sips -z 32 32 "$INPUT_ICON" --out "$ICONSET_DIR/icon_32x32.png" > /dev/null 2>&1
-sips -z 64 64 "$INPUT_ICON" --out "$ICONSET_DIR/icon_64x64.png" > /dev/null 2>&1
-sips -z 128 128 "$INPUT_ICON" --out "$ICONSET_DIR/icon_128x128.png" > /dev/null 2>&1
-sips -z 256 256 "$INPUT_ICON" --out "$ICONSET_DIR/icon_256x256.png" > /dev/null 2>&1
-sips -z 512 512 "$INPUT_ICON" --out "$ICONSET_DIR/icon_512x512.png" > /dev/null 2>&1
-sips -z 1024 1024 "$INPUT_ICON" --out "$ICONSET_DIR/icon_1024x1024.png" > /dev/null 2>&1
-sips -z 1200 1200 "$INPUT_ICON" --out "$ICONSET_DIR/icon_1200x1200.png" > /dev/null 2>&1
+for size in 16 32 64 128 256 512 1024 1200; do
+    output_file="$ICONSET_DIR/icon_${size}x${size}.png"
+    if sips -z "$size" "$size" "$INPUT_ICON" --out "$output_file" 2>&1 | grep -q "Error"; then
+        echo "Error: Failed to generate ${size}x${size} icon"
+        exit 1
+    fi
+done
 
 echo "Converting to ICNS format..."
-iconutil -c icns "$ICONSET_DIR" -o "$LOGO_DIR/icon.icns"
+if ! iconutil -c icns "$ICONSET_DIR" -o "$LOGO_DIR/icon.icns" 2>&1; then
+    echo "Error: Failed to create ICNS file"
+    exit 1
+fi
 
 echo "Creating menu bar icons..."
 # Create a large version for menu bar (keeping aspect ratio)
-sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_black.png" > /dev/null 2>&1
-sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_white.png" > /dev/null 2>&1
+if ! sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_black.png" 2>&1; then
+    echo "Error: Failed to create logo_black.png"
+    exit 1
+fi
+if ! sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_white.png" 2>&1; then
+    echo "Error: Failed to create logo_white.png"
+    exit 1
+fi
 
 echo ""
 echo "✅ Icon conversion complete!"

@@ -222,10 +222,10 @@ class AppDelegate(NSObject):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         logo_white_path = os.path.join(script_dir, LOGO_WHITE_PATH)
         self.logo_white = NSImage.alloc().initWithContentsOfFile_(logo_white_path)
-        self.logo_white.setSize_(NSSize(18, 18))
+        self.logo_white.setSize_(NSSize(16, 16))
         logo_black_path = os.path.join(script_dir, LOGO_BLACK_PATH)
         self.logo_black = NSImage.alloc().initWithContentsOfFile_(logo_black_path)
-        self.logo_black.setSize_(NSSize(18, 18))
+        self.logo_black.setSize_(NSSize(16, 16))
         # Set the initial logo image based on the current appearance
         self.updateStatusItemImage()
         # Observe system appearance changes

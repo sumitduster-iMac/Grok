@@ -41,18 +41,18 @@ for size in 16 32 64 128 256 512 1024 1200; do
 done
 
 echo "Converting to ICNS format..."
-if ! iconutil -c icns "$ICONSET_DIR" -o "$LOGO_DIR/icon.icns" 2>&1; then
+if ! iconutil -c icns "$ICONSET_DIR" -o "$LOGO_DIR/icon.icns"; then
     echo "Error: Failed to create ICNS file"
     exit 1
 fi
 
 echo "Creating menu bar icons..."
 # Create a large version for menu bar (keeping aspect ratio)
-if ! sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_black.png" 2>&1; then
+if ! sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_black.png"; then
     echo "Error: Failed to create logo_black.png"
     exit 1
 fi
-if ! sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_white.png" 2>&1; then
+if ! sips -Z 961 "$INPUT_ICON" --out "$LOGO_DIR/logo_white.png"; then
     echo "Error: Failed to create logo_white.png"
     exit 1
 fi

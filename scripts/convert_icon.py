@@ -16,8 +16,11 @@ def download_icon_from_macosicons(icon_id, output_path):
     """
     Attempt to download icon from macosicons.com.
     Note: This may not work due to site restrictions. Manual download may be required.
+    
+    The URLs below are speculative endpoints - macosicons.com doesn't provide
+    a documented public API for direct downloads by icon ID.
     """
-    # Possible URL patterns (may need adjustment based on site structure)
+    # Possible URL patterns (unverified - may need adjustment based on site structure)
     possible_urls = [
         f"https://macosicons.com/api/icons/{icon_id}/download",
         f"https://cdn.macosicons.com/{icon_id}.png",

@@ -62,6 +62,31 @@ Developed by **Sumit Duster**
 A macOS overlay for Grok AI - providing quick access to Grok from anywhere on your Mac.
 
 
+## Customizing the App Icon
+
+You can customize the app icon by downloading a new icon from [macosicons.com](https://macosicons.com) or any other source. The app uses multiple icon files for different purposes:
+
+- `macos_grok_overlay/logo/logo_black.png` - Menu bar icon (light mode) and About dialog
+- `macos_grok_overlay/logo/logo_white.png` - Menu bar icon (dark mode)
+- `macos_grok_overlay/logo/icon.icns` - Application icon (Finder, Dock, etc.)
+
+To update the icons:
+
+1. Download your preferred icon (PNG format recommended)
+2. Run the conversion script:
+   ```bash
+   ./scripts/convert_icon.sh /path/to/your/icon.png
+   ```
+   Or using Python:
+   ```bash
+   python3 scripts/convert_icon.py /path/to/your/icon.png
+   ```
+3. Test the changes by running the app
+4. Commit your updated icons
+
+See [ICON_UPDATE_INSTRUCTIONS.md](ICON_UPDATE_INSTRUCTIONS.md) for detailed instructions.
+
+
 ## How it works
 
   This is a very thin `pyobjc` application written to contain a web view of the current production Grok website. Most of the logic contained in this small application is for stylistic purposes, making the overlay shaped correctly, resizeable, draggable, and able to be summoned anywhere easily with a single (modifiable) keyboard command. There's also a few steps needed to listen specifically for the `Option + Space` keyboard command, which requires Accessibility access to macOS.

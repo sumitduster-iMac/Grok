@@ -6,7 +6,8 @@
 A simple macOS overlay application for pinning <code>grok.com</code> to a dedicated window and key command <code>option+space</code>.
 </p>
 
-![Launcher Sample](images/macos-grok-overlay.jpeg)
+<img width="479" height="968" alt="Screenshot 2026-01-07 at 7 03 53 PM" src="https://github.com/user-attachments/assets/9c7db092-a5eb-4665-99fd-511e525564d4" />
+
 
 
 ## Installation:
@@ -15,7 +16,7 @@ A simple macOS overlay application for pinning <code>grok.com</code> to a dedica
 
 **Compatibility:** The DMG launcher is now built as a universal binary (arm64 + x86_64), so it runs on both modern M-series laptops and older Intel-based Macs (2015/2017 era) provided they are on a supported version of macOS. When creating your own build you can force a specific target by exporting `PY2APP_ARCH` (e.g., `PY2APP_ARCH=x86_64 ./dmg-builder/build.sh`).
 
-[![DMG Installer](images/dmg-installer-preview.png)](https://github.com/sumitduster/Grok/releases/download/0.0.18/Grok.dmg)
+
 
   Otherwise, you can install the latest stable release from a Terminal with:
 
@@ -31,14 +32,15 @@ grok --install-startup
 
   You will get a request like this to enable Accessibility the first time this launches.
 
-![Accessibility Request](images/macos-grok-overlay-accessibility.png)
+<img width="231" height="284" alt="Screenshot 2026-01-07 at 7 04 08 PM" src="https://github.com/user-attachments/assets/2e68bcb2-133c-4bbb-83e1-ec39d5528cfe" />
+
 
   The Accessibility access is required for the background task to listen for the `Option+Space` keyboard command. But please don't just take my word for it, look at the [listener code yourself](macos_grok_overlay/listener.py) and see. ;)
 
   Within a few seconds of approving Accessibility access, you should see a little icon like this appear along the top of your screen.
 
-![Menu Sample](images/macos-grok-overlay-menu.png)
 
+![Menu Sample](images/macos-grok-overlay-menu.png)
   And you're done! Now this should launch automatically and constantly run in the background. If you ever decide you do not want it, see the uninstall instructions below.
 
 

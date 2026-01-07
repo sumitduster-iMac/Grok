@@ -25,7 +25,7 @@
 ## 📸 Preview
 
 <p align="center">
-  <img width="479" alt="Grok Overlay Screenshot" src="https://github.com/user-attachments/assets/9c7db092-a5eb-4665-99fd-511e525564d4" />
+  <img width="479" height="968" alt="Grok Overlay Screenshot" src="https://github.com/user-attachments/assets/9c7db092-a5eb-4665-99fd-511e525564d4" />
 </p>
 
 ## 📦 Installation
@@ -55,7 +55,7 @@ grok --install-startup
 You will get a request like this to enable Accessibility the first time this launches:
 
 <p align="center">
-  <img width="475" alt="Accessibility Permission Request" src="https://github.com/user-attachments/assets/a76ad5ba-5965-4c71-8ee9-6e4d759cf254" />
+  <img width="475" height="189" alt="Accessibility Permission Request" src="https://github.com/user-attachments/assets/a76ad5ba-5965-4c71-8ee9-6e4d759cf254" />
 </p>
 
 The Accessibility access is required for the background task to listen for the `Option+Space` keyboard command. But please don't just take my word for it, look at the [listener code yourself](macos_grok_overlay/listener.py) and see. ;)
@@ -63,7 +63,7 @@ The Accessibility access is required for the background task to listen for the `
 Within a few seconds of approving Accessibility access, you should see a little icon like this appear along the top of your screen:
 
 <p align="center">
-  <img width="231" alt="Menu Bar Icon" src="https://github.com/user-attachments/assets/9f34b044-6b78-4af4-87fa-5454461aca1d" />
+  <img width="231" height="284" alt="Menu Bar Icon" src="https://github.com/user-attachments/assets/9f34b044-6b78-4af4-87fa-5454461aca1d" />
 </p>
 
 And you're done! Now this should launch automatically and constantly run in the background. If you ever decide you do not want it, see the uninstall instructions below.

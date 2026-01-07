@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0fc09487-61e9-41e0-876a-0c7ab32eca53" alt="Grok Logo" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0fc09487-61e9-41e0-876a-0c7ab32eca53" alt="Grok Logo" width="200" height="200"/>
 </p>
 
 <h1 align="center">Grok - macOS Overlay</h1>
@@ -13,11 +13,11 @@
 </p>
 
 <p align="center">
-  <a href="#-preview">Preview</a> •
-  <a href="#-installation">Installation</a> •
-  <a href="#-usage">Usage</a> •
-  <a href="#-how-it-works">How it Works</a> •
-  <a href="#-about">About</a>
+  <a href="#preview">Preview</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#how-it-works">How it Works</a> •
+  <a href="#about">About</a>
 </p>
 
 ---
